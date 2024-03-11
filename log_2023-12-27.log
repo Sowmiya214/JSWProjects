@@ -1,0 +1,245 @@
+2023-12-27 11:08:41.008 INFO  [restartedMain] com.jsw.fe.FeApplication - Starting FeApplication using Java 20.0.2 with PID 9508 (D:\fe_mvc_war\target\classes started by Jswadmin in D:\fe_mvc_war)
+2023-12-27 11:08:41.008 INFO  [restartedMain] com.jsw.fe.FeApplication - No active profile set, falling back to 1 default profile: "default"
+2023-12-27 11:08:41.054 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-12-27 11:08:41.054 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-12-27 11:08:41.650 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-27 11:08:41.746 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 78 ms. Found 24 JPA repository interfaces.
+2023-12-27 11:08:42.239 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8081 (http)
+2023-12-27 11:08:42.245 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2023-12-27 11:08:42.245 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-12-27 11:08:42.245 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-12-27 11:08:42.286 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-12-27 11:08:42.287 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1232 ms
+2023-12-27 11:08:42.393 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-12-27 11:08:42.653 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: e178dd03-0296-4a93-a659-94d5ac4f6b65
+2023-12-27 11:08:42.655 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-12-27 11:08:42.692 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-27 11:08:42.729 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-12-27 11:08:42.958 INFO  [restartedMain] SQL dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+2023-12-27 11:08:42.960 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000026: SQLServer2012Dialect has been deprecated; use org.hibernate.dialect.SQLServerDialect instead
+2023-12-27 11:08:43.786 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-12-27 11:08:43.786 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-27 11:08:44.661 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-27 11:08:44.766 INFO  [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2023-12-27 11:08:44.851 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-12-27 11:08:45.068 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2023-12-27 11:08:45.084 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2023-12-27 11:08:45.096 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8081 (http) with context path ''
+2023-12-27 11:08:45.103 INFO  [restartedMain] com.jsw.fe.FeApplication - Started FeApplication in 4.517 seconds (process running for 5.148)
+2023-12-27 11:09:27.895 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-27 11:09:27.895 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-12-27 11:09:27.895 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-12-27 11:09:30.434 INFO  [restartedMain] com.jsw.fe.FeApplication - Starting FeApplication using Java 20.0.2 with PID 2972 (D:\fe_mvc_war\target\classes started by Jswadmin in D:\fe_mvc_war)
+2023-12-27 11:09:30.440 INFO  [restartedMain] com.jsw.fe.FeApplication - No active profile set, falling back to 1 default profile: "default"
+2023-12-27 11:09:30.471 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-12-27 11:09:30.471 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-12-27 11:09:30.996 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-27 11:09:31.075 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 74 ms. Found 24 JPA repository interfaces.
+2023-12-27 11:09:31.524 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8081 (http)
+2023-12-27 11:09:31.530 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2023-12-27 11:09:31.530 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-12-27 11:09:31.531 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-12-27 11:09:31.572 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-12-27 11:09:31.573 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1101 ms
+2023-12-27 11:09:31.678 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-12-27 11:09:31.988 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 32d63127-456b-4b6e-95b8-01c701db0d4b
+2023-12-27 11:09:31.990 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-12-27 11:09:32.022 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-27 11:09:32.057 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-12-27 11:09:32.263 INFO  [restartedMain] SQL dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+2023-12-27 11:09:32.264 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000026: SQLServer2012Dialect has been deprecated; use org.hibernate.dialect.SQLServerDialect instead
+2023-12-27 11:09:33.004 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-12-27 11:09:33.020 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-27 11:09:33.905 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-27 11:09:34.001 INFO  [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2023-12-27 11:09:34.085 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-12-27 11:09:34.294 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2023-12-27 11:09:34.310 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2023-12-27 11:09:34.322 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8081 (http) with context path ''
+2023-12-27 11:09:34.330 INFO  [restartedMain] com.jsw.fe.FeApplication - Started FeApplication in 4.288 seconds (process running for 4.858)
+2023-12-27 11:10:29.398 INFO  [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-27 11:10:29.398 INFO  [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-12-27 11:10:29.399 INFO  [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2023-12-27 11:10:29.694 INFO  [http-nio-8081-exec-7] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:10:29.694 INFO  [http-nio-8081-exec-5] c.j.f.t.Controller.ProdMapController - fetchProdMapList
+2023-12-27 11:10:29.707 INFO  [http-nio-8081-exec-8] com.jsw.fe.Utility.CommonController - getPlantList
+2023-12-27 11:10:29.708 INFO  [http-nio-8081-exec-9] c.j.f.M.MasterMailController - getMailWithPartsStatus
+2023-12-27 11:10:29.806 INFO  [http-nio-8081-exec-9] c.j.f.M.MasterMailController - Data is Available
+2023-12-27 11:10:29.834 INFO  [http-nio-8081-exec-2] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:10:29.872 INFO  [http-nio-8081-exec-5] c.j.f.t.Controller.ProdMapController - Data is Available
+2023-12-27 11:10:32.610 INFO  [http-nio-8081-exec-3] com.jsw.fe.Utility.CommonController - getZoneList 1
+2023-12-27 11:10:32.635 INFO  [http-nio-8081-exec-4] com.jsw.fe.Utility.CommonController - getDeptList 1
+2023-12-27 11:10:32.660 INFO  [http-nio-8081-exec-10] com.jsw.fe.Utility.CommonController - getLocationList 1
+2023-12-27 11:10:39.391 INFO  [http-nio-8081-exec-8] com.jsw.fe.Utility.CommonController - getPlantList
+2023-12-27 11:10:39.391 INFO  [http-nio-8081-exec-3] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:10:39.391 INFO  [http-nio-8081-exec-9] c.j.f.M.MasterMailController - getMailWithPartsStatus
+2023-12-27 11:10:39.420 INFO  [http-nio-8081-exec-9] c.j.f.M.MasterMailController - Data is Available
+2023-12-27 11:10:39.422 INFO  [http-nio-8081-exec-7] c.j.f.t.Controller.ProdMapController - fetchProdMapList
+2023-12-27 11:10:39.470 INFO  [http-nio-8081-exec-1] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:10:39.486 INFO  [http-nio-8081-exec-7] c.j.f.t.Controller.ProdMapController - Data is Available
+2023-12-27 11:11:45.715 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-27 11:11:45.719 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-12-27 11:11:45.722 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-12-27 11:11:48.824 INFO  [restartedMain] com.jsw.fe.FeApplication - Starting FeApplication using Java 20.0.2 with PID 15204 (D:\fe_mvc_war\target\classes started by Jswadmin in D:\fe_mvc_war)
+2023-12-27 11:11:48.824 INFO  [restartedMain] com.jsw.fe.FeApplication - No active profile set, falling back to 1 default profile: "default"
+2023-12-27 11:11:48.869 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-12-27 11:11:48.869 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-12-27 11:11:49.827 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-27 11:11:49.909 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 75 ms. Found 24 JPA repository interfaces.
+2023-12-27 11:11:50.353 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8081 (http)
+2023-12-27 11:11:50.358 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2023-12-27 11:11:50.359 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-12-27 11:11:50.359 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-12-27 11:11:50.399 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-12-27 11:11:50.399 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1530 ms
+2023-12-27 11:11:50.514 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-12-27 11:11:50.772 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 4525cb4a-7849-44a3-8696-2316e0a9c49e
+2023-12-27 11:11:50.774 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-12-27 11:11:50.806 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-27 11:11:50.840 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-12-27 11:11:51.045 INFO  [restartedMain] SQL dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+2023-12-27 11:11:51.046 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000026: SQLServer2012Dialect has been deprecated; use org.hibernate.dialect.SQLServerDialect instead
+2023-12-27 11:11:51.791 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-12-27 11:11:51.800 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-27 11:11:52.658 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-27 11:11:52.755 INFO  [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2023-12-27 11:11:52.833 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-12-27 11:11:53.051 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2023-12-27 11:11:53.067 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2023-12-27 11:11:53.067 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8081 (http) with context path ''
+2023-12-27 11:11:53.083 INFO  [restartedMain] com.jsw.fe.FeApplication - Started FeApplication in 4.753 seconds (process running for 5.58)
+2023-12-27 11:12:03.111 INFO  [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-27 11:12:03.111 INFO  [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-12-27 11:12:03.112 INFO  [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2023-12-27 11:12:03.416 INFO  [http-nio-8081-exec-6] com.jsw.fe.Utility.CommonController - getPlantList
+2023-12-27 11:12:03.416 INFO  [http-nio-8081-exec-4] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:12:03.416 INFO  [http-nio-8081-exec-5] c.j.f.t.Controller.ProdMapController - fetchProdMapList
+2023-12-27 11:12:03.431 INFO  [http-nio-8081-exec-7] c.j.f.M.MasterMailController - getMailWithPartsStatus
+2023-12-27 11:12:03.549 INFO  [http-nio-8081-exec-7] c.j.f.M.MasterMailController - Data is Available
+2023-12-27 11:12:03.552 INFO  [http-nio-8081-exec-5] c.j.f.t.Controller.ProdMapController - Data is Available
+2023-12-27 11:12:03.581 INFO  [http-nio-8081-exec-9] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:12:05.713 INFO  [http-nio-8081-exec-10] com.jsw.fe.Utility.CommonController - getZoneList 1
+2023-12-27 11:12:05.752 INFO  [http-nio-8081-exec-2] com.jsw.fe.Utility.CommonController - getDeptList 1
+2023-12-27 11:12:05.781 INFO  [http-nio-8081-exec-1] com.jsw.fe.Utility.CommonController - getLocationList 1
+2023-12-27 11:12:07.818 INFO  [http-nio-8081-exec-4] com.jsw.fe.Utility.CommonController - getPlantList
+2023-12-27 11:12:07.818 INFO  [http-nio-8081-exec-6] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:12:07.818 INFO  [http-nio-8081-exec-2] c.j.f.M.MasterMailController - getMailWithPartsStatus
+2023-12-27 11:12:07.818 INFO  [http-nio-8081-exec-5] c.j.f.t.Controller.ProdMapController - fetchProdMapList
+2023-12-27 11:12:07.851 INFO  [http-nio-8081-exec-2] c.j.f.M.MasterMailController - Data is Available
+2023-12-27 11:12:07.887 INFO  [http-nio-8081-exec-3] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:12:07.903 INFO  [http-nio-8081-exec-5] c.j.f.t.Controller.ProdMapController - Data is Available
+2023-12-27 11:12:32.109 INFO  [http-nio-8081-exec-8] com.jsw.fe.Utility.CommonController - getZoneList 1
+2023-12-27 11:12:32.136 INFO  [http-nio-8081-exec-7] com.jsw.fe.Utility.CommonController - getDeptList 1
+2023-12-27 11:12:32.194 INFO  [http-nio-8081-exec-9] com.jsw.fe.Utility.CommonController - getLocationList 1
+2023-12-27 11:12:33.858 INFO  [http-nio-8081-exec-3] com.jsw.fe.Utility.CommonController - getPlantList
+2023-12-27 11:12:33.859 INFO  [http-nio-8081-exec-6] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:12:33.859 INFO  [http-nio-8081-exec-5] c.j.f.t.Controller.ProdMapController - fetchProdMapList
+2023-12-27 11:12:33.860 INFO  [http-nio-8081-exec-8] c.j.f.M.MasterMailController - getMailWithPartsStatus
+2023-12-27 11:12:33.916 INFO  [http-nio-8081-exec-8] c.j.f.M.MasterMailController - Data is Available
+2023-12-27 11:12:33.934 INFO  [http-nio-8081-exec-5] c.j.f.t.Controller.ProdMapController - Data is Available
+2023-12-27 11:12:33.938 INFO  [http-nio-8081-exec-4] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:13:16.246 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-27 11:13:16.249 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-12-27 11:13:16.251 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-12-27 11:13:19.759 INFO  [restartedMain] com.jsw.fe.FeApplication - Starting FeApplication using Java 20.0.2 with PID 1936 (D:\fe_mvc_war\target\classes started by Jswadmin in D:\fe_mvc_war)
+2023-12-27 11:13:19.761 INFO  [restartedMain] com.jsw.fe.FeApplication - No active profile set, falling back to 1 default profile: "default"
+2023-12-27 11:13:19.798 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-12-27 11:13:19.798 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-12-27 11:13:20.324 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-27 11:13:20.407 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 77 ms. Found 24 JPA repository interfaces.
+2023-12-27 11:13:20.864 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8081 (http)
+2023-12-27 11:13:20.879 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2023-12-27 11:13:20.879 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-12-27 11:13:20.879 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-12-27 11:13:20.910 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-12-27 11:13:20.910 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1111 ms
+2023-12-27 11:13:21.032 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-12-27 11:13:21.313 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: c95f6445-306f-405d-9ca2-e47a28410401
+2023-12-27 11:13:21.313 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-12-27 11:13:21.344 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-27 11:13:21.375 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-12-27 11:13:21.592 INFO  [restartedMain] SQL dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+2023-12-27 11:13:21.592 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000026: SQLServer2012Dialect has been deprecated; use org.hibernate.dialect.SQLServerDialect instead
+2023-12-27 11:13:22.366 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-12-27 11:13:22.374 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-27 11:13:23.232 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-27 11:13:23.327 INFO  [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2023-12-27 11:13:23.422 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-12-27 11:13:23.639 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2023-12-27 11:13:23.656 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2023-12-27 11:13:23.669 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8081 (http) with context path ''
+2023-12-27 11:13:23.677 INFO  [restartedMain] com.jsw.fe.FeApplication - Started FeApplication in 4.369 seconds (process running for 5.075)
+2023-12-27 11:13:29.973 INFO  [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-27 11:13:29.973 INFO  [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-12-27 11:13:29.974 INFO  [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2023-12-27 11:13:30.280 INFO  [http-nio-8081-exec-5] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:13:30.280 INFO  [http-nio-8081-exec-2] com.jsw.fe.Utility.CommonController - getPlantList
+2023-12-27 11:13:30.280 INFO  [http-nio-8081-exec-3] c.j.f.t.Controller.ProdMapController - fetchProdMapList
+2023-12-27 11:13:30.298 INFO  [http-nio-8081-exec-9] c.j.f.M.MasterMailController - getMailWithPartsStatus
+2023-12-27 11:13:30.408 INFO  [http-nio-8081-exec-9] c.j.f.M.MasterMailController - Data is Available
+2023-12-27 11:13:30.470 INFO  [http-nio-8081-exec-1] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:13:30.513 INFO  [http-nio-8081-exec-3] c.j.f.t.Controller.ProdMapController - Data is Available
+2023-12-27 11:13:32.529 INFO  [http-nio-8081-exec-6] com.jsw.fe.Utility.CommonController - getZoneList 1
+2023-12-27 11:13:32.569 INFO  [http-nio-8081-exec-4] com.jsw.fe.Utility.CommonController - getDeptList 1
+2023-12-27 11:13:32.592 INFO  [http-nio-8081-exec-10] com.jsw.fe.Utility.CommonController - getLocationList 1
+2023-12-27 11:13:33.283 INFO  [http-nio-8081-exec-7] com.jsw.fe.Utility.CommonController - getZoneList 1
+2023-12-27 11:13:33.312 INFO  [http-nio-8081-exec-8] com.jsw.fe.Utility.CommonController - getDeptList 1
+2023-12-27 11:13:33.331 INFO  [http-nio-8081-exec-2] com.jsw.fe.Utility.CommonController - getLocationList 1
+2023-12-27 11:13:34.816 INFO  [http-nio-8081-exec-1] com.jsw.fe.Utility.CommonController - getPlantList
+2023-12-27 11:13:34.817 INFO  [http-nio-8081-exec-4] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:13:34.840 INFO  [http-nio-8081-exec-3] c.j.f.M.MasterMailController - getMailWithPartsStatus
+2023-12-27 11:13:34.854 INFO  [http-nio-8081-exec-9] c.j.f.t.Controller.ProdMapController - fetchProdMapList
+2023-12-27 11:13:34.864 INFO  [http-nio-8081-exec-3] c.j.f.M.MasterMailController - Data is Available
+2023-12-27 11:13:34.923 INFO  [http-nio-8081-exec-9] c.j.f.t.Controller.ProdMapController - Data is Available
+2023-12-27 11:13:34.987 INFO  [http-nio-8081-exec-2] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:13:53.074 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-27 11:13:53.077 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2023-12-27 11:13:53.079 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2023-12-27 11:13:56.477 INFO  [restartedMain] com.jsw.fe.FeApplication - Starting FeApplication using Java 20.0.2 with PID 14424 (D:\fe_mvc_war\target\classes started by Jswadmin in D:\fe_mvc_war)
+2023-12-27 11:13:56.481 INFO  [restartedMain] com.jsw.fe.FeApplication - No active profile set, falling back to 1 default profile: "default"
+2023-12-27 11:13:56.592 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-12-27 11:13:56.593 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-12-27 11:13:57.158 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-12-27 11:13:57.241 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 77 ms. Found 24 JPA repository interfaces.
+2023-12-27 11:13:57.707 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8081 (http)
+2023-12-27 11:13:57.713 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8081"]
+2023-12-27 11:13:57.714 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2023-12-27 11:13:57.714 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-12-27 11:13:57.755 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-12-27 11:13:57.755 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1162 ms
+2023-12-27 11:13:57.848 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2023-12-27 11:13:58.114 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection ConnectionID:1 ClientConnectionId: 13eace7a-3162-4c16-b4e3-046239b57a6e
+2023-12-27 11:13:58.114 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2023-12-27 11:13:58.145 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-12-27 11:13:58.192 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-12-27 11:13:58.431 INFO  [restartedMain] SQL dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+2023-12-27 11:13:58.431 WARN  [restartedMain] org.hibernate.orm.deprecation - HHH90000026: SQLServer2012Dialect has been deprecated; use org.hibernate.dialect.SQLServerDialect instead
+2023-12-27 11:13:59.216 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-12-27 11:13:59.225 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-12-27 11:14:00.114 WARN  [restartedMain] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-12-27 11:14:00.208 INFO  [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2023-12-27 11:14:00.286 WARN  [restartedMain] o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-12-27 11:14:00.504 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2023-12-27 11:14:00.504 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8081"]
+2023-12-27 11:14:00.520 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8081 (http) with context path ''
+2023-12-27 11:14:00.536 INFO  [restartedMain] com.jsw.fe.FeApplication - Started FeApplication in 4.758 seconds (process running for 5.406)
+2023-12-27 11:14:04.646 INFO  [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-12-27 11:14:04.646 INFO  [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-12-27 11:14:04.647 INFO  [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2023-12-27 11:14:04.889 INFO  [http-nio-8081-exec-9] c.j.f.t.Controller.ProdMapController - fetchProdMapList
+2023-12-27 11:14:04.920 INFO  [http-nio-8081-exec-8] com.jsw.fe.Utility.CommonController - getPlantList
+2023-12-27 11:14:04.920 INFO  [http-nio-8081-exec-5] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:14:04.934 INFO  [http-nio-8081-exec-10] c.j.f.M.MasterMailController - getMailWithPartsStatus
+2023-12-27 11:14:05.038 INFO  [http-nio-8081-exec-4] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:14:05.044 INFO  [http-nio-8081-exec-10] c.j.f.M.MasterMailController - Data is Available
+2023-12-27 11:14:05.044 INFO  [http-nio-8081-exec-9] c.j.f.t.Controller.ProdMapController - Data is Available
+2023-12-27 11:14:06.786 INFO  [http-nio-8081-exec-7] com.jsw.fe.Utility.CommonController - getZoneList 1
+2023-12-27 11:14:06.855 INFO  [http-nio-8081-exec-6] com.jsw.fe.Utility.CommonController - getDeptList 1
+2023-12-27 11:14:06.885 INFO  [http-nio-8081-exec-3] com.jsw.fe.Utility.CommonController - getLocationList 1
+2023-12-27 11:14:13.259 INFO  [http-nio-8081-exec-2] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:14:13.259 INFO  [http-nio-8081-exec-6] com.jsw.fe.Utility.CommonController - getPlantList
+2023-12-27 11:14:13.261 INFO  [http-nio-8081-exec-4] c.j.f.M.MasterMailController - getMailWithPartsStatus
+2023-12-27 11:14:13.284 INFO  [http-nio-8081-exec-4] c.j.f.M.MasterMailController - Data is Available
+2023-12-27 11:14:13.284 INFO  [http-nio-8081-exec-3] c.j.f.t.Controller.ProdMapController - fetchProdMapList
+2023-12-27 11:14:13.301 INFO  [http-nio-8081-exec-7] com.jsw.fe.Utility.CommonController - getProductName
+2023-12-27 11:14:13.369 INFO  [http-nio-8081-exec-3] c.j.f.t.Controller.ProdMapController - Data is Available
