@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generator</title>
+    <style>
+        /* Your CSS styles here */
+        /* Styles for certificate layout */
+        .certificate {
+            width: 800px;
+            margin: 20px auto;
+            border: 2px solid #333;
+            padding: 20px;
+        }
+        .content {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="certificate">
+    <div class="header">
+        <h1>Certificate of Completion</h1>
+    </div>
+    <div id="certificateContent" class="content">
+        <!-- Certificate content will be dynamically inserted here -->
+    </div>
+    <div class="footer">
+        <p>This is the footer of the certificate</p>
+    </div>
+</div>
+
+<form id="certificateForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="course">Course:</label>
+    <input type="text" id="course" name="course" required><br><br>
+
+    <label for="date">Completion Date:</label>
+    <input type="text" id="date" name="date" required><br><br>
+
+    <button type="button" onclick="saveData()">Save</button>
+</form>
+
+<script>
+    function saveData() {
+        const name = document.getElementById('name').value;
+        const course = document.getElementById('course').value;
+        const date = document.getElementById('date').value;
+
+        const formData = {
+            name: name,
+            course: course,
+            date: date
+        };
+
+        generateCertificate(formData);
+    }
+
+    function generateCertificate(formData) {
+        const certificateContent = document.getElementById('certificateContent');
+
+        let htmlContent = '<h2>Generated Certificate</h2>';
+        htmlContent += `<p><strong>Name:</strong> ${formData.name}</p>`;
+        htmlContent += `<p><strong>Course:</strong> ${formData.course}</p>`;
+        htmlContent += `<p><strong>Completion Date:</strong> ${formData.date}</p>`;
+
+        certificateContent.innerHTML = htmlContent;
+    }
+</script>
+</body>
+</html>
