@@ -31,16 +31,15 @@ $("#t1_bay_name").change(function() {
     $("#lable_bay_info").text($("#t1_bay_name option:selected").text());
     loadComboList("t1_row_no", base_url+"/commonCtrl/getListRowNo?bay_id=" + bay_id);
     cardsOperationExpand("row_cards_option");
-    //getRowList(bay_id);
+    getRowList(bay_id);
     clearRowAndGrid();
 });
-$("#shapes_name").change(function() {
-    var bay_id =  $("#lable_bay_info").text($("#t1_bay_name option:selected").text());
-    selectedItem = $(this).children("option:selected").val();
-    cardsOperationExpand("row_cards_option");
-    batchListByYard(bay_id,selectedItem);
-    clearRowAndGrid();
-});
+// $("#shapes_name").change(function() {
+//     selectedItem = $(this).children("option:selected").val();
+//     cardsOperationExpand("row_cards_option");
+//     batchListByYard(bay_id,selectedItem);
+//     clearRowAndGrid();
+// });
 function clearRowAndGrid() {
     $('#coilGrid').html("");
     $('#coilGrid2').html("");
@@ -79,7 +78,7 @@ $("select#shapes_name").change(function() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: base_url + "/CubeInfo/getBatchAllListByYardHTML",
+            url: base_url + "/CubeInfo/fetchBatchAllListByYardHTMLRound",
             type: "GET",
             success: function(data) {
                 // Append the fetched HTML to the container
@@ -98,7 +97,7 @@ $("select#shapes_name").change(function() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: base_url + "/CubeInfo/fetchBatchAllListByYardHTMLRound",
+            url: base_url + "/CubeInfo/getBatchAllListByYardHTML",
             type: "GET",
             success: function(data) {
                 // Append the fetched HTML to the container
@@ -131,38 +130,15 @@ $("select#shapes_name").change(function() {
         });
     }
 });
-function batchListByYard(bay_id) {
+
+function batchListByYard(bay_id, r1) {
     $.ajax({
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
 
-       // url: base_url+"/CubeInfo/getBatchAllListByYardHTML?bay_id=" + bay_id + "&row_no=" + r1 + "&option="+selectedItem,
-        url: base_url+"/CubeInfo/fetchBatchAllListByYardHTMLRoundRect?bay_id=" + bay_id + "&shapes="+selectedItem,
-        type: "GET",
-        /*data: JSON.stringify(formData),
-        //dataType: "JSON",*/
-
-        success: function(data) {
-
-                 $('#coilGrid').html(data.data);
-                 //console.log(data.data);
-        },
-        error: function(data){
-            if (data.status == 500) {
-                toastr.error('Internal Server Error.');
-            }
-        }
-
-    })
-    $.ajax({
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-
-        url: base_url+"/CubeInfo/fetchBatchAllListByYardHTMLRoundRect?bay_id=" +  bay_id + "&shapes="+selectedItem,
+        url: base_url+"/CubeInfo/getBatchAllListByYardHTML1?bay_id=" + bay_id + "&row_no=" + r1 + "&option=1",
         type: "GET",
         /*data: JSON.stringify(formData),
         //dataType: "JSON",*/
@@ -178,6 +154,28 @@ function batchListByYard(bay_id) {
         }
 
     })
+    // $.ajax({
+    //     headers: {
+    //         'Accept': 'application/json',
+    //         'Content-Type': 'application/json'
+    //     },
+    //
+    //     url: base_url+"/batchInfo/getBatchAllListByYardHTML?bay_id=" + bay_id + "&row_no=" + r2 + "&option=2",
+    //     type: "GET",
+    //     /*data: JSON.stringify(formData),
+    //     //dataType: "JSON",*/
+    //
+    //     success: function(data) {
+    //         $('#coilGrid2').html(data.data);
+    //
+    //     },
+    //     error: function(data){
+    //         if (data.status == 500) {
+    //             toastr.error('Internal Server Error.');
+    //         }
+    //     }
+    //
+    // })
 }
 
 $(document).on("click", ".select-row", function(e) {
@@ -189,10 +187,10 @@ $(document).on("click", ".select-row", function(e) {
     let r1 = 0, r2 = 0;
     if ((parseInt(thisRowNumber) % 2) == 0) {
         r1 = parseInt(thisRowNumber) - 1;
-        r2 =selectedItem;
+        r2 = parseInt(thisRowNumber);
     } else {
         r1 = parseInt(thisRowNumber);
-        r2 = selectedItem;
+        r2 = parseInt(thisRowNumber) + 1;
     }
 
     $("#selected_row_no").val(r1);
@@ -201,25 +199,38 @@ $(document).on("click", ".select-row", function(e) {
     $("#lable_row_info2").text(selectedItem);
     cardsOperationExpand("coil_cards_option,coil_cards_option2");
     cardsOperationCollapse("plant_card_operation");
-   // batchListByYard(bay_id, selectedItem);
+    batchListByYard(bay_id, r1, r2);
 });
+function isSideViewLayer(layer) {
+    // Check if the layer is odd
+    return layer % 2 == 0; // If layer is odd, it belongs to side view
+}
+function isFrontViewLayer(layer) {
+    // Check if the layer is odd
+    return layer % 2 != 0; // If layer is odd, it belongs to side view
+}
 
 
 
 var focusInName = '';
 $(document).on("click", ".cube", function(e) {
     e.preventDefault();
+    $('#modal-batch-add').modal('show');
     $("#current_select").val("R1");
     let thisdata = $(this).attr('data-coil-info');
-    console.log(">>>: "+thisdata);
+
+    console.log(">>>>>>>>>>>: "+thisdata);
     let arr = thisdata.split("/");
 
     let selected_row = $("#selected_row_no").val();
-    console.log("selected_row: "+selected_row);
     let batch_name = arr[0];
     let row = arr[1];
     let layer = arr[2];
     let column = arr[3];
+    console.log("batch_name: "+batch_name);
+    console.log("row: "+row);
+    console.log("layer: "+layer);
+    console.log("column: "+column);
     let newyard = $('#t1_yard_name').val();
     let newplant = $('#t1_plant_name').val();
     let newbay = $('#t1_bay_name').val();
@@ -240,14 +251,13 @@ $(document).on("click", ".cube", function(e) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: base_url+"/CubeInfo/getValidationForSave?plant_id=" + newplant + "&yard_id=" + newyard + "&bay_id=" + newbay + "&row_no=" + selected_row + "&layer_no=" + layer + "&column_no=" + column,
+            url: base_url+"/batchInfo/getValidationForSave?plant_id=" + newplant + "&yard_id=" + newyard + "&bay_id=" + newbay + "&row_no=" + selected_row + "&layer_no=" + layer + "&column_no=" + column,
             type: "GET",
-            //data: JSON.stringify(formData),
+           // data: JSON.stringify(formData),
             //dataType: "JSON",
 
             success: function(data) {
                 if (data.status == 1) {
-                    $('#modal-batch-add').modal('show');
                     $('#save_layer_no').val(layer);
                     $('#save_column_no').val(column);
                     //$('#save_batch_name').val('');
@@ -260,28 +270,23 @@ $(document).on("click", ".cube", function(e) {
                     $('#modal-batch-add').on('shown.bs.modal', function() {
                         $('#save_batch_name').focus();
                     })
+
                 }
-                // else
-                // if (data.status == 2) {
-                //
-                //     toastr.info('Fill Mentioned  Batch first..');
-                // }
-                //
-                // else if (data.status == 3) {
-                //
-                //     toastr.info('Fill Mentioned  Batch first..');
-                //
-                // }
+                if(data.status == 3){
+                    toastr.error('Internal Server Error.');
+                }
 
             },
             error: function(data){
                 if (data.status == 500) {
-                    toastr.error('Internal Server Error.');
+                    toastr.error('Batch Already Exist.');
                 }
             }
 
         })
-    } else {
+
+        } else {
+        $('#modal-batch-dispatch').modal('show');
 
         $.ajax({
             headers: {
@@ -296,7 +301,7 @@ $(document).on("click", ".cube", function(e) {
 
             success: function(data) {
                 if (data.status == 1) {
-                    $('#modal-batch-dispatch').modal('show');
+
                     $('#coilMoveGrid').html('');
                     $('#dispatch_batch_name').val(batch_name);
                     $('#lable_dispatch_batch_name').text(batch_name);
@@ -336,7 +341,7 @@ $(document).on("click", ".cube side-view editable", function(e) {
     let thisdata = $(this).attr('data-coil-info');
 
     let arr = thisdata.split("/");
-
+    $('#modal-batch-add').modal('show');
     let selected_row = $("#selected_row_no2").val();
     let batch_name = arr[0];
     let row = arr[1];
@@ -402,6 +407,7 @@ $(document).on("click", ".cube side-view editable", function(e) {
 
         })
     } else {
+        $('#modal-batch-dispatch').modal('show');
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -445,6 +451,77 @@ $(document).on("click", ".cube side-view editable", function(e) {
 });
 
 $('#saveOrUpdateBatch').click(function() {
+    let plant_id = $('#t1_plant_name').val();
+    let yard_id = $('#t1_yard_name').val();
+    let bay_id = $('#t1_bay_name').val();
+    let selected_row = $("#current_select").val() === "R1" ? $("#selected_row_no").val() : $("#selected_row_no2").val();
+    let row_no = selected_row;
+
+
+    let thisdata = $(this).attr('data-coil-info');
+    let arr = thisdata.split("/");
+    let batch_name = arr[0];
+    let row = arr[1];
+    let layer = arr[2];
+    let column = arr[3];
+
+    let layer_no = $('#save_layer_no').val();
+    let column_no = $('#save_column_no').val();
+    let newbatch = $("#save_batch_name").val().trim();
+    console.log("layer_no: "+layer);
+    console.log("column_no: "+column);
+    console.log("newbatch: "+batch_name);
+
+    if (newbatch === "" || newbatch.length < 10) {
+        toastr.error('Enter Batch Name...');
+        return false;
+    }
+
+    var formData = {
+        "batch_name": newbatch.toUpperCase(),
+        "plant_id": plant_id,
+        "yard_id": yard_id,
+        "bay_id": bay_id,
+        "row_no": row_no,
+        "layer_no": layer_no,
+        "column_no": column_no
+    };
+
+    console.log(JSON.stringify(formData));
+
+    // Call your endpoint to save or move the batch
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        url: base_url + "/CubeInfo/saveOrMoveBatch",
+        type: "POST",
+        data: JSON.stringify(formData),
+        dataType: "JSON",
+        success: function(data) {
+            // Handle success response
+            if (data.status == 1) {
+                toastr.success('Batch Save Successfully.');
+                // You may perform additional actions here if needed
+            } else if (data.status == 3) {
+                toastr.error('Batch already exists.');
+            } else {
+                toastr.error('Failed to save the batch.');
+            }
+        },
+        error: function(data) {
+            // Handle error response
+            if (data.status == 500) {
+                toastr.error('Internal Server Error.');
+            }
+        }
+    });
+});
+
+
+
+$('#saveOrUpdateBatch1').click(function() {
     let plant_id = $('#t1_plant_name').val();
     let yard_id = $('#t1_yard_name').val();
     let bay_id = $('#t1_bay_name').val();
