@@ -11,10 +11,10 @@ import com.jsw.ym.cube.Entity.CubeHdrModel;
 import com.jsw.ym.cube.Repository.CubeRepository;
 import com.jsw.ym.transaction.Entity.BatchHdrModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.jsw.ym.master.Entity.BayMstrModel;
 import com.jsw.ym.master.Service.BayService;
-import com.jsw.ym.transaction.Entity.BatchdetailsModel;
 import com.jsw.ym.transaction.Entity.INTFBatchDetails;
 import com.jsw.ym.utility.Constants;
 
@@ -26,43 +26,108 @@ public class CubeServiceImple implements CubeService {
 	@Autowired
 	private BayService bayService;
 
+	private boolean isSideViewLayer(int layerNo) {
+		// Implement your logic here to identify side view layers
+		// For example, if side view layers are even-numbered, you can use:
+		return layerNo % 2 == 0;
+	}
+
+	// Method to generate batch position for the side view
+	private String generateBatchPositionForSideView(CubeHdrModel cubeHdrModel) {
+		System.out.println("Side_View_" + cubeHdrModel.getRow_no() + "_" + cubeHdrModel.getLayer_no() + "_" + cubeHdrModel.getColumn_no());
+		return "Side_View_" + cubeHdrModel.getRow_no() + "_" + cubeHdrModel.getLayer_no() + "_" + cubeHdrModel.getColumn_no();
+	}
+
+	// Method to generate batch position for the front view
+	private String generateBatchPositionForFrontView(CubeHdrModel cubeHdrModel) {
+		System.out.println("Front_View_" + cubeHdrModel.getRow_no() + "_" + cubeHdrModel.getLayer_no() + "_" + cubeHdrModel.getColumn_no());
+		return "Front_View_" + cubeHdrModel.getRow_no() + "_" + cubeHdrModel.getLayer_no() + "_" + cubeHdrModel.getColumn_no();
+	}
+
+	public class CustomException extends RuntimeException {
+		public CustomException(String message, HttpStatus internalServerError) {
+			super(message);
+		}
+	}
+
+
 	@Override
 	public CubeHdrModel saveBatch(CubeHdrModel cubeHdrModel) {
 		Optional<BayMstrModel> mstr_bay = bayService.getBayById(cubeHdrModel.getBay_id());
 		CubeHdrModel Loc_batch = new CubeHdrModel();
 
-		if (cubeHdrModel.getRow_no() <= mstr_bay.get().getRow_no()
+		if (mstr_bay.isPresent() && cubeHdrModel.getRow_no() <= mstr_bay.get().getRow_no()
 				&& cubeHdrModel.getLayer_no() <= mstr_bay.get().getLayer_no()
 				&& cubeHdrModel.getColumn_no() <= mstr_bay.get().getColumn_no()) {
 			cubeHdrModel.setBatch_id(null);
 			cubeHdrModel.setRecord_status(1);
 			cubeHdrModel.setUpdated_date_time(null);
 			cubeHdrModel.setBatch_status(Constants.BATCH_STATUS_AVAILABLE);
-			cubeHdrModel.setBatch_position(generateBatchPosition(cubeHdrModel));
 
-			Loc_batch = cubeRepository.save(cubeHdrModel);
+			// Determine whether to generate batch position for front view or side view
+			if (isSideViewLayer(cubeHdrModel.getLayer_no())) {
+				// Generate batch position for side view
+				cubeHdrModel.setBatch_position(generateBatchPositionForSideView(cubeHdrModel));
+			} else {
+				// Generate batch position for front view
+				cubeHdrModel.setBatch_position(generateBatchPositionForFrontView(cubeHdrModel));
+			}
 
-			BatchdetailsModel Loc_batchdetails = new BatchdetailsModel();
-			Loc_batchdetails.setBatchdetails_id(null);
-			Loc_batchdetails.setBatch_id(Loc_batch.getBatch_id());
-			Loc_batchdetails.setBatch_name(Loc_batch.getBatch_name());
-			Loc_batchdetails.setBatch_status(Loc_batch.getBatch_status());
-			Loc_batchdetails.setPlant_id(Loc_batch.getPlant_id());
-			Loc_batchdetails.setYard_id(Loc_batch.getYard_id());
-			Loc_batchdetails.setBay_id(Loc_batch.getBay_id());
-			Loc_batchdetails.setRow_no(Loc_batch.getRow_no());
-			Loc_batchdetails.setLayer_no(Loc_batch.getLayer_no());
-			Loc_batchdetails.setColumn_no(Loc_batch.getColumn_no());
-			Loc_batchdetails.setCreated_by(Loc_batch.getCreated_by());
-			Loc_batchdetails.setUpdated_by(Loc_batch.getUpdated_by());
-			Loc_batchdetails.setCreated_date_time(Loc_batch.getCreated_date_time());
-			Loc_batchdetails.setUpdated_date_time(null);
-			Loc_batchdetails.setRecord_status(1);
-
-			intfSave(cubeHdrModel);
+			try {
+				Loc_batch = cubeRepository.save(cubeHdrModel);
+				// Add code here to save batch details if needed
+			} catch (Exception e) {
+				// Handle database save error
+				e.printStackTrace(); // Log the exception for debugging
+				throw new CustomException("Failed to save batch", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} else {
+			// Handle invalid batch parameters or missing bay information
+			throw new CustomException("Invalid batch parameters or bay information", HttpStatus.BAD_REQUEST);
 		}
+
 		return Loc_batch;
 	}
+
+
+
+	//	@Override
+//	public CubeHdrModel saveBatch(CubeHdrModel cubeHdrModel) {
+//		Optional<BayMstrModel> mstr_bay = bayService.getBayById(cubeHdrModel.getBay_id());
+//		CubeHdrModel Loc_batch = new CubeHdrModel();
+//
+//		if (cubeHdrModel.getRow_no() <= mstr_bay.get().getRow_no()
+//				&& cubeHdrModel.getLayer_no() <= mstr_bay.get().getLayer_no()
+//				&& cubeHdrModel.getColumn_no() <= mstr_bay.get().getColumn_no()) {
+//			cubeHdrModel.setBatch_id(null);
+//			cubeHdrModel.setRecord_status(1);
+//			cubeHdrModel.setUpdated_date_time(null);
+//			cubeHdrModel.setBatch_status(Constants.BATCH_STATUS_AVAILABLE);
+//			cubeHdrModel.setBatch_position(generateBatchPosition(cubeHdrModel));
+//
+//			Loc_batch = cubeRepository.save(cubeHdrModel);
+//
+//			BatchdetailsModel Loc_batchdetails = new BatchdetailsModel();
+//			Loc_batchdetails.setBatchdetails_id(null);
+//			Loc_batchdetails.setBatch_id(Loc_batch.getBatch_id());
+//			Loc_batchdetails.setBatch_name(Loc_batch.getBatch_name());
+//			Loc_batchdetails.setBatch_status(Loc_batch.getBatch_status());
+//			Loc_batchdetails.setPlant_id(Loc_batch.getPlant_id());
+//			Loc_batchdetails.setYard_id(Loc_batch.getYard_id());
+//			Loc_batchdetails.setBay_id(Loc_batch.getBay_id());
+//			Loc_batchdetails.setRow_no(Loc_batch.getRow_no());
+//			Loc_batchdetails.setLayer_no(Loc_batch.getLayer_no());
+//			Loc_batchdetails.setColumn_no(Loc_batch.getColumn_no());
+//			Loc_batchdetails.setCreated_by(Loc_batch.getCreated_by());
+//			Loc_batchdetails.setUpdated_by(Loc_batch.getUpdated_by());
+//			Loc_batchdetails.setCreated_date_time(Loc_batch.getCreated_date_time());
+//			Loc_batchdetails.setUpdated_date_time(null);
+//			Loc_batchdetails.setRecord_status(1);
+//
+//			intfSave(cubeHdrModel);
+//		}
+//		return Loc_batch;
+//	}
 	public String generateBatchPosition(CubeHdrModel cubeHdrModel) {
 		String position = "";
 		try {
@@ -127,31 +192,61 @@ public class CubeServiceImple implements CubeService {
 		intf.setCreated_date_time(intf.getCreated_date_time());
 		return intf;
 	}
-
+	public class BatchNotFoundException extends RuntimeException {
+		public BatchNotFoundException(String message) {
+			super(message);
+		}
+	}
 	@Override
 	public CubeHdrModel updateBatch(CubeHdrModel cubeHdrModel) {
+		try {
+			CubeHdrModel batchToUpdate = new CubeHdrModel();
+			batchToUpdate.setBatch_status(Constants.BATCH_STATUS_AVAILABLE);
+			batchToUpdate.setBatch_position(generateBatchPosition(cubeHdrModel));
+			batchToUpdate.setPlant_id(cubeHdrModel.getPlant_id());
+			batchToUpdate.setYard_id(cubeHdrModel.getYard_id());
+			batchToUpdate.setBay_id(cubeHdrModel.getBay_id());
+			batchToUpdate.setRow_no(cubeHdrModel.getRow_no());
+			batchToUpdate.setColumn_no(cubeHdrModel.getColumn_no());
+			batchToUpdate.setLayer_no(cubeHdrModel.getLayer_no());
+			batchToUpdate.setUpdated_by(cubeHdrModel.getUpdated_by());
+			batchToUpdate.setUpdated_date_time(cubeHdrModel.getUpdated_date_time());
+			batchToUpdate.setCreated_date_time(batchToUpdate.getCreated_date_time()); // Set current timestamp for created_date_time
 
-		Optional<CubeHdrModel> b_obj = cubeRepository.getBatchByName(cubeHdrModel.getBatch_name(),
-				Constants.BATCH_STATUS_AVAILABLE);
-		if (b_obj.isPresent()) {
-			//b_obj.get().setBatch_name(batchHdrModel.getBatch_name());
-			b_obj.get().setBatch_status(Constants.BATCH_STATUS_AVAILABLE);
-			b_obj.get().setBatch_position(generateBatchPosition(cubeHdrModel));
-			b_obj.get().setPlant_id(cubeHdrModel.getPlant_id());
-			b_obj.get().setYard_id(cubeHdrModel.getYard_id());
-			b_obj.get().setBay_id(cubeHdrModel.getBay_id());
-			b_obj.get().setRow_no(cubeHdrModel.getRow_no());
-			b_obj.get().setColumn_no(cubeHdrModel.getColumn_no());
-			b_obj.get().setLayer_no(cubeHdrModel.getLayer_no());
-			b_obj.get().setUpdated_by(cubeHdrModel.getUpdated_by());
-			b_obj.get().setUpdated_date_time(cubeHdrModel.getUpdated_date_time());
-			b_obj.get().setCreated_date_time(b_obj.get().getCreated_date_time());
-			cubeRepository.save(b_obj.get());
-
+			// Save the new batch to the repository
+			return cubeRepository.save(batchToUpdate);
+		} catch (Exception ex) {
+			ex.printStackTrace(); // Log the exception for debugging
+			// Return an appropriate response indicating that the batch couldn't be saved
+			return null; // Or handle it based on your application's requirements
 		}
-
-		return b_obj.get();
 	}
+
+
+//	@Override
+//	public CubeHdrModel updateBatch(CubeHdrModel cubeHdrModel) {
+//
+//		Optional<CubeHdrModel> b_obj = cubeRepository.getBatchByName(cubeHdrModel.getBatch_name(),
+//				Constants.BATCH_STATUS_AVAILABLE);
+//		if (b_obj.isPresent()) {
+//			//b_obj.get().setBatch_name(batchHdrModel.getBatch_name());
+//			b_obj.get().setBatch_status(Constants.BATCH_STATUS_AVAILABLE);
+//			b_obj.get().setBatch_position(generateBatchPosition(cubeHdrModel));
+//			b_obj.get().setPlant_id(cubeHdrModel.getPlant_id());
+//			b_obj.get().setYard_id(cubeHdrModel.getYard_id());
+//			b_obj.get().setBay_id(cubeHdrModel.getBay_id());
+//			b_obj.get().setRow_no(cubeHdrModel.getRow_no());
+//			b_obj.get().setColumn_no(cubeHdrModel.getColumn_no());
+//			b_obj.get().setLayer_no(cubeHdrModel.getLayer_no());
+//			b_obj.get().setUpdated_by(cubeHdrModel.getUpdated_by());
+//			b_obj.get().setUpdated_date_time(cubeHdrModel.getUpdated_date_time());
+//			b_obj.get().setCreated_date_time(b_obj.get().getCreated_date_time());
+//			cubeRepository.save(b_obj.get());
+//
+//		}
+//
+//		return b_obj.get();
+//	}
 
 
 
@@ -273,10 +368,55 @@ public class CubeServiceImple implements CubeService {
 
 		return (temp_batch.isPresent()) ? temp_batch : (Optional) temp_batch.empty();
 	}
-
 	@Override
 	public List<CubeHdrModel> getValidationForSave(CubeHdrModel cubeHdrModel) {
 		Optional<BayMstrModel> mstr_Bay = bayService.getBayById(cubeHdrModel.getBay_id());
+		System.out.println("cubeHdrModel: " + cubeHdrModel.getBay_id());
+		List<CubeHdrModel> newYard = new ArrayList<>();
+
+		// Ensure mstr_Bay is present before proceeding
+		if (mstr_Bay.isPresent()) {
+			int max_layer_no = mstr_Bay.get().getLayer_no();
+			int loc_layer_no = cubeHdrModel.getLayer_no();
+
+			// Assuming loc_layer_no is 1-based, decrement it to access the 0-based index
+			loc_layer_no--;
+
+			// Initialize sideViewState array if it's null
+			if (sideViewState == null) {
+				sideViewState = new boolean[max_layer_no];
+				Arrays.fill(sideViewState, true); // Initialize all layers in side view as editable
+			}
+
+			// Mark the corresponding front view or side view layer as used based on the conditions
+			if (cubeHdrModel.getLayer_no() % 2 == 0) {
+				// If the layer number is even, it's a side view layer
+				sideViewState[loc_layer_no] = false; // Mark side view layer as used
+				frontViewState[loc_layer_no] = false; // Mark corresponding front view layer as disabled
+				System.out.println("Side view layer " + (loc_layer_no + 1) + " is used. Front view layer " + (loc_layer_no + 1) + " is disabled.");
+			} else {
+				// If the layer number is odd, it's a front view layer
+				frontViewState[loc_layer_no] = false; // Mark front view layer as used
+				sideViewState[loc_layer_no] = false; // Mark corresponding side view layer as disabled
+				System.out.println("Front view layer " + (loc_layer_no + 1) + " is used. Side view layer " + (loc_layer_no + 1) + " is disabled.");
+			}
+
+			// Additional existing code logic for batch validation and processing goes here
+			// newYard = performBatchValidation(cubeHdrModel); // Example function call
+		} else {
+			// Handle the case when BayMstrModel is not found for the given bay_id
+			System.out.println("Error: BayMstrModel not found for bay_id " + cubeHdrModel.getBay_id());
+			// You may throw an exception or handle it as per your application's error handling strategy
+		}
+
+		return newYard;
+	}
+
+
+	//@Override
+	public List<CubeHdrModel> getValidationForSave1(CubeHdrModel cubeHdrModel) {
+		Optional<BayMstrModel> mstr_Bay = bayService.getBayById(cubeHdrModel.getBay_id());
+		System.out.println("cubeHdrModel: "+cubeHdrModel.getBay_id());
 		List<CubeHdrModel> newYard = new ArrayList<>();
 
 		// Ensure mstr_Bay is present before proceeding
@@ -327,6 +467,88 @@ public class CubeServiceImple implements CubeService {
 		return htmlContent.toString();
 	}
 
+	public String fetchBatchAllListByYardHTMLFst(Long bay_id, int row_no, String batch_status) {
+		Optional<BayMstrModel> mstr_bay = bayService.getBayById(bay_id);
+		int max_layer = mstr_bay.get().getLayer_no();
+		int max_cols = mstr_bay.get().getColumn_no();
+		Long yard_id = mstr_bay.get().getYard_id();
+
+		// Initialize view states based on max layers
+		frontViewState = new boolean[max_layer];
+		sideViewState = new boolean[max_layer];
+		Arrays.fill(frontViewState, true);
+		Arrays.fill(sideViewState, true);
+
+		String sideViewStateJson = null;
+		try {
+			sideViewStateJson = objectMapper.writeValueAsString(sideViewState);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		StringBuilder html_str = new StringBuilder();
+		html_str.append("<input type='hidden' id='sideViewState' value='" + sideViewStateJson + "' />");		html_str.append("<h4>Front View</h4>");
+		html_str.append("<div style=\"display: flex;\">");
+		html_str.append("<div id=\"front-container\" class=\"cube-container\" style=\"overflow-y: scroll;\">");
+		for (int i = max_layer; i > 0; i--) { // Loop in reverse order starting from max_layer
+			html_str.append("<div class=\"cube-row\">");
+			for (int j = 1; j <= max_cols; j++) {
+				Optional<CubeHdrModel> coil = cubeRepository.getVerifyPositionStatus(yard_id, bay_id, row_no, i, j, batch_status);
+				String coilInfo = "";
+				if (coil.isPresent()) {
+					String save_coil = coil.get().getBatch_name() + "<br>" + coil.get().getBatch_position();
+					coilInfo = coil.get().getBatch_name() + "/" + row_no + "/" + i + "/" + j; // Customize coil info as needed
+					html_str.append("<div class=\"cube\" style=\"background-color:green;box-shadow:inset 0 0 1.5px 1.5px #444444\"  data-coil-info=\"" + coilInfo + "\">" + save_coil + "</div>");
+				} else {
+					String title = "Front";
+					coilInfo = "NIL/" + row_no + "/" + i + "/" + j;
+					html_str.append("<div class=\"cube\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\" title=\"" + title + "\" data-coil-info=\"" + coilInfo + "\">" + title + "</div>");
+				}
+			}
+			html_str.append("</div>");
+		}
+		html_str.append("</div>");
+
+		// Generate side view HTML
+		StringBuilder side_html_str = new StringBuilder();
+		side_html_str.append("<h4 style=\"margin-top:-9mm;width:0mm;\">Side View</h4>");
+		side_html_str.append("<div style=\"display: flex;\">");
+		side_html_str.append("<div id=\"side-container\" class=\"cube-container\" style=\"overflow-y: scroll;\">"); // Apply scroll to side view container
+		for (int i = max_layer - 1; i >= 0; i--) { // Loop in reverse order for side view starting from max_layer - 1 to 0
+			side_html_str.append("<div class=\"cube-row\">");
+			for (int j = 1; j <= max_cols; j++) {
+				String title = "side";
+				String coilInfo = "NIL/" + row_no + "/" + (i + 1) + "/" + j; // Correct layer indexing for coil info
+				// Check if the layer is editable and add onclick event accordingly
+				if (sideViewState[i]) {
+					side_html_str.append("<div class=\"cube side-view editable\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\" title=\"" + title + "\" data-coil-info=\"" + coilInfo + "\" onclick=\"handleSideViewClick('" + title + "', " + i + ")\">" + title + "</div>");
+				} else {
+					side_html_str.append("<div class=\"cube side-view disabled\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\" title=\"" + title + "\" data-coil-info=\"" + coilInfo + "\">" + title + "</div>");
+				}
+			}
+			side_html_str.append("</div>");
+		}
+		side_html_str.append("</div>");
+
+		// JavaScript function to handle side view click
+		html_str.append("<script>");
+		html_str.append("function handleSideViewClick(layer, index) {");
+		html_str.append("var sideViewStateStr = document.getElementById('sideViewState').value;");
+		html_str.append("console.log('sideViewStateStr:', sideViewStateStr);"); // Log sideViewStateStr for debugging
+		html_str.append("var sideViewState = JSON.parse(sideViewStateStr);");
+		html_str.append("if (sideViewState[index]) {");
+		html_str.append("alert('Can create new batches in side view layer ' + (index + 1));");
+		html_str.append("} else {");
+		html_str.append("alert('Cannot create new batches in front view layer ' + (index + 1));");
+		html_str.append("}");
+		html_str.append("}");
+		html_str.append("</script>");
+		return html_str.toString() + side_html_str.toString();
+	}
+
+	@Override
+	public String fetchBatchAllListByYardHTMLScnd(Long bay_id, int row_no, String batch_status) {
+		return null;
+	}
 
 	@Override
 	public String fetchBatchAllListByYardHTMLFst() {
@@ -359,8 +581,7 @@ public class CubeServiceImple implements CubeService {
 				// Here, you can add your logic for different shapes
 				// For example, if you want to display Round shape for all cells, you can use this:
 				String title = "Front";
-				System.out.println("title: "+title);
-				html_str.append("<div class=\"cube\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\" title=\"" + "Front" + "\"></div>");
+				html_str.append("<div class=\"cube\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\" title=\"" + title + "\"></div>");
 			}
 			html_str.append("</div>");
 		}
@@ -458,8 +679,7 @@ public class CubeServiceImple implements CubeService {
 			html_str.append("<div class=\"round-row\">");
 			for (int j = 1; j <= max_cols; j++) {
 				String title = "Front";
-				System.out.println("title: "+title);
-				html_str.append("<div class=\"round\" style=\"background-color:green;box-shadow:inset 0 0 1.5px 1.5px #444444\"  title=\"" + "Front" + "\"></div>");
+				html_str.append("<div class=\"round\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\"  title=\"" + title + "\"></div>");
 				}
 			html_str.append("</div>");
 		}
@@ -511,11 +731,9 @@ public class CubeServiceImple implements CubeService {
 	}
 
 	@Override
-	public String fetchBatchAllListByYardHTMLRoundRect(Long bay_id, int row_no, String batch_status) {
-		Optional<BayMstrModel> mstr_bay = bayService.getBayById(bay_id);
-		int max_layer = mstr_bay.get().getLayer_no();
-		int max_cols = mstr_bay.get().getColumn_no();
-		Long yard_id = mstr_bay.get().getYard_id();
+	public String fetchBatchAllListByYardHTMLRoundRect() {
+		int max_layer = 5;
+		int max_cols = 10;
 
 		// Initialize view states based on max layers
 		frontViewState = new boolean[max_layer];
@@ -535,21 +753,10 @@ public class CubeServiceImple implements CubeService {
 		html_str.append("<div style=\"display: flex;\">");
 		html_str.append("<div id=\"front-container\" class=\"roundRect-container\" style=\"overflow-y: scroll;\">");
 		for (int i = max_layer; i > 0; i--) { // Loop in reverse order starting from max_layer
-			html_str.append("<div class=\"round-row\">");
+			html_str.append("<div class=\"roundRect-row\">");
 			for (int j = 1; j <= max_cols; j++) {
-				Optional<CubeHdrModel> coil = cubeRepository.getVerifyPositionStatus(yard_id, bay_id, row_no, i, j, batch_status);
-				String coilInfo = "";
-				if (coil.isPresent()) {
-					String save_coil = coil.get().getBatch_name() + "<br>" + coil.get().getBatch_position();
-					coilInfo = coil.get().getBatch_name() + "/" + row_no + "/" + i + "/" + j; // Customize coil info as needed
-					System.out.println("Front coil coilInfo: " + coilInfo);
-					html_str.append("<div class=\"round\" style=\"background-color:green;box-shadow:inset 0 0 1.5px 1.5px #444444\"  data-coil-info=\"" + coilInfo + "\">" + save_coil + "</div>");
-				} else {
-					String title = "Front";
-					coilInfo = "NIL/" + row_no + "/" + i + "/" + j;
-					System.out.println("front coilInfo: " + coilInfo);
-					html_str.append("<div class=\"round\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\" title=\"" + title + "\" data-coil-info=\"" + coilInfo + "\">" + title + "</div>");
-				}
+				String title = "Front";
+				html_str.append("<div class=\"roundRect\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\"  title=\"" + title + "\"></div>");
 			}
 			html_str.append("</div>");
 		}
@@ -564,33 +771,41 @@ public class CubeServiceImple implements CubeService {
 			side_html_str.append("<div class=\"roundRect-row\">");
 			for (int j = 1; j <= max_cols; j++) {
 				String title = "side";
-				String coilInfo = "NIL/" + row_no + "/" + (i + 1) + "/" + j; // Correct layer indexing for coil info
-				System.out.println("selected rows: "+coilInfo);
 				// Check if the layer is editable and add onclick event accordingly
 				if (sideViewState[i]) {
-					side_html_str.append("<div class=\"roundRect side-view editable\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\" title=\"" + title + "\" data-coil-info=\"" + coilInfo + "\" onclick=\"handleSideViewClick('" + title + "', " + i + ")\">" + title + "</div>");
+					side_html_str.append("<div class=\"roundRect side-view editable\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\" title=\"" + title + "\"  onclick=\"handleSideViewClick('" + title + "', " + i + ")\">" + title + "</div>");
 				} else {
-					side_html_str.append("<div class=\"roundRect side-view disabled\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\" title=\"" + title + "\" data-coil-info=\"" + coilInfo + "\">" + title + "</div>");
+					side_html_str.append("<div class=\"roundRect side-view disabled\" style=\"background-color:#d5cfcf8f;box-shadow:inset 0 0 1.5px 1.5px #444444\" title=\"" + title + "\" " + title + "</div>");
 				}
+
 			}
 			side_html_str.append("</div>");
 		}
 		side_html_str.append("</div>");
 
 		// JavaScript function to handle side view click
-		html_str.append("<script>");
-		html_str.append("function handleSideViewClick(layer, index) {");
-		html_str.append("var sideViewStateStr = document.getElementById('sideViewState').value;");
-		html_str.append("console.log('sideViewStateStr:', sideViewStateStr);"); // Log sideViewStateStr for debugging
-		html_str.append("var sideViewState = JSON.parse(sideViewStateStr);");
-		html_str.append("if (sideViewState[index]) {");
-		html_str.append("alert('Can create new batches in side view layer ' + (index + 1));");
-		html_str.append("} else {");
-		html_str.append("alert('Cannot create new batches in front view layer ' + (index + 1));");
-		html_str.append("}");
-		html_str.append("}");
-		html_str.append("</script>");
-		return html_str.toString() + side_html_str.toString();
+		StringBuilder script = new StringBuilder();
+		script.append("<script>");
+		script.append("function handleSideViewClick(layer, index) {");
+		script.append("var sideViewStateStr = document.getElementById('sideViewState').value;");
+		script.append("console.log('sideViewStateStr:', sideViewStateStr);"); // Log sideViewStateStr for debugging
+		script.append("var sideViewState = JSON.parse(sideViewStateStr);");
+		script.append("if (sideViewState[index]) {");
+		script.append("alert('Can create new batches in side view layer ' + (index + 1));");
+		script.append("} else {");
+		script.append("alert('Cannot create new batches in front view layer ' + (index + 1));");
+		script.append("}");
+		script.append("}");
+		script.append("</script>");
+
+		StringBuilder finalHtml = new StringBuilder();
+		finalHtml.append(html_str.toString());
+		finalHtml.append(side_html_str.toString());
+		finalHtml.append(script.toString());
+
+		return finalHtml.toString();
+
+
 	}
 
 	@Override
@@ -598,5 +813,46 @@ public class CubeServiceImple implements CubeService {
 		Optional<CubeHdrModel> ob = cubeRepository.getBatchNameList(batch_name);
 		return ob;
 	}
+	@Override
+	public Optional<CubeHdrModel> getBayById(Long bay_id) {
+		return cubeRepository.findById(bay_id);
+	}
+	@Override
+	public int[] getFilledCoilCount(Long bay_id, int row_no) {
+		Optional<BayMstrModel> mstr_bay = bayService.getBayById(bay_id);
+		int max_layer = mstr_bay.get().getLayer_no();
+		int max_cols = mstr_bay.get().getColumn_no();
+		Long yard_id = mstr_bay.get().getYard_id();
+		int max_row_no = mstr_bay.get().getRow_no();
+		int req_row_no = row_no;
+		String html_str = "";
+		int totalcount = 0;
+		int filled = 0, empty = 0;
+		int colsCount = 0;
+		for (int i = max_layer; i > 0; i--) {
+			if (i == 1) {
+				colsCount = max_cols;
+			} else {
+				colsCount = (max_cols - (i - 1));
+			}
+			String coil_val = "";
+			String coil_info = "";
 
+			for (int j = 1; j <= colsCount; j++) {
+
+				Optional<CubeHdrModel> coil = cubeRepository.getVerifyPositionStatus(yard_id, bay_id, req_row_no, i,
+						j, Constants.BATCH_STATUS_AVAILABLE);
+				//	System.out.println(yard_id+"/"+ bay_id+"/"+ req_row_no+"/"+ i+"/"+j+"/"+Constants.BATCH_STATUS_AVAILABLE);
+				if (coil.isPresent()) {
+					filled = filled + 1;
+				} else {
+					empty = empty + 1;
+				}
+			}
+		}
+		int columnNumber = bayService.getColumnByBayWithRow(bay_id, req_row_no);
+
+		int[] val = { (filled + empty), filled, empty, columnNumber };
+		return val;
+	}
 }
