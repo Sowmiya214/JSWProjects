@@ -1,11 +1,13 @@
 package com.jsw.ym.cube.Controller;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import com.jsw.ym.cube.Entity.CubeHdrModel;
 import com.jsw.ym.cube.Service.CubeService;
+import com.jsw.ym.transaction.Entity.BatchHdrModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,39 +29,98 @@ public class CubeController {
 	public ResponseEntity<?> saveOrMoveBatch(@RequestBody CubeHdrModel cubeHdrModel) {
 		Map<String, Object> map = new LinkedHashMap<>();
 		try {
-			// Check if the batch position indicates a side view layer
-			if (isSideViewLayer(cubeHdrModel.getLayer_no())) {
-				// Modify the batch position to save it in the front view instead of the side view
-				cubeHdrModel.setLayer_no(modifyLayerNumber(cubeHdrModel.getLayer_no()));
-			}
 			// Proceed with saving or moving the batch
 			Optional<CubeHdrModel> validateBatch = cubeService.getBatchName(cubeHdrModel.getBatch_name().replaceAll("\\s", ""));
 			if (!validateBatch.isPresent()) {
-				Optional<CubeHdrModel> existingBatch = cubeService.getVerifyPositionStatus(cubeHdrModel);
-				if (!existingBatch.isPresent()) {
-					cubeHdrModel.setBatch_name(cubeHdrModel.getBatch_name().replaceAll("\\s", ""));
-					CubeHdrModel savedBatch = cubeService.saveBatch(cubeHdrModel);
-					map.put("status", 1);
-					map.put("data", savedBatch);
-					map.put("message", Constants.BATCH_SAVE_SUCCESSFULLY);
-					return new ResponseEntity<>(map, HttpStatus.OK);
+				// Check if the batch position indicates a side view layer
+				if (isSideViewLayer(cubeHdrModel.getLayer_no())) {
+					// Save batch directly in the side view
+					cubeHdrModel.setBatch_position(generateBatchPositionForSideView(cubeHdrModel));
 				} else {
-					CubeHdrModel updatedBatch = cubeService.updateBatch(cubeHdrModel);
-					map.put("status", 2);
-					map.put("data", updatedBatch);
-					map.put("message", Constants.BATCH_UPDATE_SUCCESSFULLY);
-					return new ResponseEntity<>(map, HttpStatus.OK);
+					// Save batch in the front view
+					cubeHdrModel.setBatch_position(generateBatchPositionForFrontView(cubeHdrModel));
 				}
+
+				// Save the batch
+				CubeHdrModel savedBatch = cubeService.saveBatch(cubeHdrModel);
+				map.put("status", 1);
+				map.put("data", savedBatch);
+				map.put("message", Constants.BATCH_SAVE_SUCCESSFULLY);
+				return new ResponseEntity<>(map, HttpStatus.OK);
+			} else {
+				// Handle the case when the batch name already exists
+				map.put("status", 3);
+				map.put("message", Constants.BATCH_ALREADY_EXIST);
+				return new ResponseEntity<>(map, HttpStatus.OK);
 			}
 		} catch (Exception ex) {
-			System.out.println(ex);
+			ex.printStackTrace(); // Log the exception for debugging
 			map.clear();
 			map.put("status", 0);
 			map.put("message", HttpStatus.INTERNAL_SERVER_ERROR);
 			return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
+
+	private String generateBatchPositionForSideView(CubeHdrModel cubeHdrModel) {
+		// Add your logic here to generate the batch position for side view
+		// Example implementation:
+		int layerNo = cubeHdrModel.getLayer_no();
+		return "Side view layer " + layerNo + " position"; // Modify this according to your actual logic
+	}
+	private String generateBatchPositionForFrontView(CubeHdrModel cubeHdrModel) {
+		// Add your logic here to generate the batch position for front view
+		// Example implementation:
+		int layerNo = cubeHdrModel.getLayer_no();
+		return "Front view layer " + layerNo + " position"; // Modify this according to your actual logic
+	}
+
+
+	//test
+//	@PostMapping("/saveOrMoveBatch")
+//	public ResponseEntity<?> saveOrMoveBatch(@RequestBody CubeHdrModel cubeHdrModel) {
+//		Map<String, Object> map = new LinkedHashMap<>();
+//		try {
+//			// Proceed with saving or moving the batch
+//			Optional<CubeHdrModel> validateBatch = cubeService.getBatchName(cubeHdrModel.getBatch_name().replaceAll("\\s", ""));
+//			if (!validateBatch.isPresent()) {
+//				Optional<CubeHdrModel> existingBatch = cubeService.getVerifyPositionStatus(cubeHdrModel);
+//				if (!existingBatch.isPresent()) {
+//					// Check if the batch position indicates a side view layer
+//					if (isSideViewLayer(cubeHdrModel.getLayer_no())) {
+//						// Save batch directly in the side view without modifying layer number
+//						CubeHdrModel savedBatch = cubeService.saveBatch(cubeHdrModel);
+//						map.put("status", 1);
+//						map.put("data", savedBatch);
+//						map.put("message", Constants.BATCH_SAVE_SUCCESSFULLY);
+//						return new ResponseEntity<>(map, HttpStatus.OK);
+//					} else {
+//						// Save batch in the front view
+//						cubeHdrModel.setBatch_name(cubeHdrModel.getBatch_name().replaceAll("\\s", ""));
+//						CubeHdrModel savedBatch = cubeService.saveBatch(cubeHdrModel);
+//						map.put("status", 1);
+//						map.put("data", savedBatch);
+//						map.put("message", Constants.BATCH_SAVE_SUCCESSFULLY);
+//						return new ResponseEntity<>(map, HttpStatus.OK);
+//					}
+//				} else {
+//					CubeHdrModel updatedBatch = cubeService.updateBatch(cubeHdrModel);
+//					map.put("status", 2);
+//					map.put("data", updatedBatch);
+//					map.put("message", Constants.BATCH_UPDATE_SUCCESSFULLY);
+//					return new ResponseEntity<>(map, HttpStatus.OK);
+//				}
+//			}
+//		} catch (Exception ex) {
+//			System.out.println(ex);
+//			map.clear();
+//			map.put("status", 0);
+//			map.put("message", HttpStatus.INTERNAL_SERVER_ERROR);
+//			return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//		return new ResponseEntity<>(map, HttpStatus.OK);
+//	}
+
 
 	// Method to check if the batch position indicates a side view layer
 	private boolean isSideViewLayer(int layerNo) {
@@ -164,6 +225,86 @@ public class CubeController {
 		}
 
 	}
+
+
+	@GetMapping("/getValidationForSave")
+	public ResponseEntity<?> getValidationForSave(@RequestParam("plant_id") Long plant_id,
+												  @RequestParam("yard_id") Long yard_id, @RequestParam("bay_id") Long bay_id,
+												  @RequestParam("row_no") int row_no, @RequestParam("layer_no") int layer_no,
+												  @RequestParam("column_no") int column_no) {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		try {
+			CubeHdrModel ob = new CubeHdrModel();
+			ob.setPlant_id(plant_id);
+			ob.setYard_id(yard_id);
+			ob.setBay_id(bay_id);
+			ob.setRow_no(row_no);
+			ob.setLayer_no(layer_no);
+			ob.setColumn_no(column_no);
+			List<CubeHdrModel> Validation = cubeService.getValidationForSave(ob);
+
+			if (layer_no == 1) {
+				map.put("status", 1);
+				map.put("data", Validation);
+				map.put("message", Constants.BATCH_BATCHVALIDATION_SUCCESSFULLY);
+				return new ResponseEntity<>(map, HttpStatus.OK);
+			}
+			else {
+
+				if (Validation.size() == 2) {
+					map.put("status", 1);
+					map.put("data", Validation);
+					map.put("message", Constants.BATCH_BATCHVALIDATION_SUCCESSFULLY);
+					return new ResponseEntity<>(map, HttpStatus.OK);
+
+				} else if (Validation.size() == 0) {
+					map.put("status", 2);
+					map.put("data", Validation);
+					map.put("message", Constants.BATCH_SAVE_VALIDATION_FAILD);
+					return new ResponseEntity<>(map, HttpStatus.OK);
+				} else {
+					map.put("status", 3);
+					map.put("data", Validation);
+					map.put("message", Constants.BATCH_SAVE_VALIDATION_FAILD);
+					return new ResponseEntity<>(map, HttpStatus.OK);
+
+				}
+			}
+
+		} catch (Exception e) {
+			map.clear();
+			map.put("status", 0);
+			map.put("message", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+	@GetMapping("/getBatchAllListByYardHTML1")
+	public ResponseEntity<?> getBatchAllListByYard(@RequestParam("bay_id") Long bay_id,
+												   @RequestParam("row_no") int row_no, @RequestParam("option") int option) {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		String batch_lst = "";
+		if (option == 1) {
+			batch_lst = cubeService.fetchBatchAllListByYardHTMLFst(bay_id, row_no, Constants.BATCH_STATUS_AVAILABLE);
+		} else if (option == 2) {
+			batch_lst = cubeService.fetchBatchAllListByYardHTMLScnd(bay_id, row_no, Constants.BATCH_STATUS_AVAILABLE);
+		}
+		if (!batch_lst.isEmpty()) {
+			map.put("status", 1);
+			map.put("data", batch_lst);
+			map.put("message", Constants.BATCH_RETRIEVE_SUCCESSFULLY);
+			return new ResponseEntity<>(map, HttpStatus.OK);
+		} else {
+			map.clear();
+			map.put("status", 0);
+			map.put("message", Constants.DATA_NOT_FOUND);
+			return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+
+
 	@GetMapping("/fetchBatchAllListByYardHTMLRound")
 	public ResponseEntity<?> fetchBatchAllListByYardHTMLRound() {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
@@ -185,12 +326,11 @@ public class CubeController {
 
 	}
 	@GetMapping("/fetchBatchAllListByYardHTMLRoundRect")
-	public ResponseEntity<?> fetchBatchAllListByYardHTMLRoundRect(@RequestParam("bay_id") Long bay_id,@RequestParam("row_no") int row_no, @RequestParam("shapes") String shapes) {
+	public ResponseEntity<?> fetchBatchAllListByYardHTMLRoundRect() {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
 		String batch_lst = "";
-		if (shapes == "RoundRect") {
-			batch_lst = cubeService.fetchBatchAllListByYardHTMLRoundRect(bay_id,row_no,Constants.BATCH_STATUS_AVAILABLE);
-		}
+
+		batch_lst = cubeService.fetchBatchAllListByYardHTMLRoundRect();
 
 		if (!batch_lst.isEmpty()) {
 			map.put("status", 1);
